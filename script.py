@@ -121,16 +121,21 @@ example_ticker = {'ticker': 'XJUL',
     'last_updated_utc': '2025-09-15T06:04:58.615984543Z'}
 
 # Write CSV with the same schema as example_ticker
-FIELDNAMES = list(example_ticker.keys())
 
-output_path = os.path.join(os.getcwd(), 'tickers.csv')
-with open(output_path, 'w', newline='') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=FIELDNAMES)
-    writer.writeheader()
-    for t in tickers:
-        if not isinstance(t, dict):
-            continue
-        row = {key: t.get(key, '') for key in FIELDNAMES}
-        writer.writerow(row)
+def run_stock_job():
+    FIELDNAMES = list(example_ticker.keys())
 
-print(f"Wrote CSV: {output_path}")
+    output_path = os.path.join(os.getcwd(), 'tickers.csv')
+    with open(output_path, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=FIELDNAMES)
+        writer.writeheader()
+        for t in tickers:
+            if not isinstance(t, dict):
+                continue
+            row = {key: t.get(key, '') for key in FIELDNAMES}
+            writer.writerow(row)
+
+    print(f"Wrote CSV: {output_path}")
+
+if __name__ == "__main__":
+    run_stock_job()
